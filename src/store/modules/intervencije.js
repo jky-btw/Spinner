@@ -15,7 +15,11 @@ const getters = {
     return state.intervencijeAll;
   },
   intervencijeFiltered: (state, getters, rootState, rootGetters) => {
-    return state.intervencijeAll.filter((itv) => filterList(itv, rootGetters));
+    return state.intervencijeAll
+      .filter(
+        (itv) => searchList(itv, rootGetters) && filterList(itv, rootGetters)
+      )
+      .sort((itv1, itv2) => sortList(itv1, itv2, rootGetters));
   },
   isFetched: (state) => {
     return state.intervencijeAll.length > 0;
@@ -56,6 +60,7 @@ const actions = {
               tempEl["prijavaDatumFormatted"] = moment(
                 tempEl["prijavaCas"]
               ).format("l");
+              tempEl["casObject"] = moment(tempEl["nastanekCas"]);
               lokacijaArray[i] = tempEl;
             }
 
@@ -110,7 +115,7 @@ const mutations = {
   },
 };
 
-function filterList(itv, rootGetters) {
+function searchList(itv, rootGetters) {
   const wordFilter = rootGetters["filters/wordFilter"];
   const searchOn = rootGetters["filters/searchOn"];
 
@@ -130,6 +135,24 @@ function filterList(itv, rootGetters) {
       );
     case "obcina":
       return itv.obcinaNaziv.toLowerCase().includes(wordFilter.toLowerCase());
+  }
+}
+
+function filterList(itv, rootGetters) {
+  return true;
+}
+
+function sortList(itv1, itv2, rootGetters) {
+  const orderFilter = rootGetters["filters/orderFilter"];
+
+  switch (orderFilter) {
+    case "timeup":
+      return itv2.casObject - itv1.casObject;
+    case "timedowm":
+      return itv1.casObject - itv2.casObject;
+    case "locup":
+
+    case "locdown":
   }
 }
 

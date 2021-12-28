@@ -3,7 +3,7 @@
     <q-card class="q-dialog-plugin">
       <q-card-section> <b>Iskanje</b> </q-card-section>
       <q-card-section>
-        <q-input class="q-mb-sm" v-model="localWordFilter" outlined>
+        <q-input class="q-mb-sm" v-model="localWordFilter" outlined clearable>
           <template v-slot:prepend>
             <q-icon name="search" />
           </template>

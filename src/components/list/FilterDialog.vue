@@ -4,10 +4,14 @@
       <q-card-section> <b>Sortiraj intervencije</b> </q-card-section>
       <q-card-section>
         <div class="flex column q-mb-md">
-          <q-radio v-model="filter" val="locup" label="Najbližje" />
-          <q-radio v-model="filter" val="locdown" label="Oddaljeno" />
-          <q-radio v-model="filter" val="timeup" label="Najnovejše" />
-          <q-radio v-model="filter" val="timedowm" label="Najstarejše" />
+          <q-radio v-model="localOrderFilter" val="timeup" label="Najnovejše" />
+          <q-radio
+            v-model="localOrderFilter"
+            val="timedowm"
+            label="Najstarejše"
+          />
+          <q-radio v-model="localOrderFilter" val="locup" label="Najbližje" />
+          <q-radio v-model="localOrderFilter" val="locdown" label="Oddaljeno" />
         </div>
         <q-select
           behavior="dialog"
@@ -51,7 +55,12 @@
             </q-item>
           </template>
         </q-select>
-        <q-btn class="full-width" label="Potrdi" color="primary" />
+        <q-btn
+          class="full-width"
+          label="Potrdi"
+          @click="onOKClick"
+          color="primary"
+        />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -61,6 +70,7 @@
 import { ref } from "vue";
 import obcine from "../../data/obcine.json";
 import { options } from "../../data/intervencijeType.js";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "FilterDialog",
@@ -72,7 +82,7 @@ export default {
   components: {},
   data() {
     return {
-      filter: null,
+      localOrderFilter: "",
       type: null,
       intervencijaType: options,
     };
@@ -120,8 +130,14 @@ export default {
       },
     };
   },
-
+  computed: {
+    ...mapGetters("filters", ["orderFilter"]),
+  },
+  created() {
+    this.localOrderFilter = this.orderFilter;
+  },
   methods: {
+    ...mapMutations("filters", ["setOrderFilter"]),
     show() {
       this.$refs.dialog.show();
     },
@@ -134,6 +150,7 @@ export default {
       this.$emit("hide");
     },
     onOKClick() {
+      this.setOrderFilter(this.localOrderFilter);
       // on OK, it is REQUIRED to
       // emit "ok" event (with optional payload)
       // before hiding the QDialog
@@ -143,7 +160,6 @@ export default {
       // then hiding dialog
       this.hide();
     },
-
     onCancelClick() {
       // we just need to hide the dialog
       this.hide();

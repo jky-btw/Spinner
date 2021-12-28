@@ -2,9 +2,9 @@
   <q-list bordered separator>
     <q-expansion-item
       v-for="(intervencija, key) in modelValue"
-      :key="key"
+      :key="key.toString()"
       group="intervencijeGroup"
-      @after-show="scrollTo(key)"
+      @after-show="scrollTo(key.toString())"
       :ref="key.toString()"
       expand-icon-class="hidden"
     >
@@ -33,7 +33,7 @@ export default {
   methods: {
     scrollTo(key) {
       const itemRef = this.$refs[key];
-      const el = itemRef.$el;
+      const el = itemRef[0].$el;
       if (el.getBoundingClientRect().bottom > window.innerHeight) {
         //If at the bottom
         el.scrollIntoView({
