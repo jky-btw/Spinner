@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "360195897796",
+    "firebase_url": "https://spinner-bdba6-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "spinner-bdba6",
+    "storage_bucket": "spinner-bdba6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360195897796:android:bf53c0c58ce5682f2b4c91",
+        "android_client_info": {
+          "package_name": "com.jky.spinner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360195897796-28ai1vo9ijon64dtahggl802op8ep0vr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm4tGTXFN3xUfbjhlIRCtJf1reWsp85VM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360195897796-28ai1vo9ijon64dtahggl802op8ep0vr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
