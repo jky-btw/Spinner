@@ -1,5 +1,10 @@
 <template>
-  <q-dialog seamless position="bottom" ref="dialog">
+  <q-dialog
+    seamless
+    position="bottom"
+    ref="dialog"
+    v-touch-swipe.mouse.down="handleSwipe"
+  >
     <q-card class="q-dialog-plugin" @click="expand()">
       <div class="row justify-between items-center no-wrap fit">
         <div class="column content-center">
@@ -61,6 +66,11 @@ export default {
   methods: {
     expand() {
       this.expanded = !this.expanded;
+    },
+
+    handleSwipe() {
+      console.log("swipe");
+      this.hide();
     },
 
     // following method is REQUIRED

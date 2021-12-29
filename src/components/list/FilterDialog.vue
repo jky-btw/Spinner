@@ -17,7 +17,7 @@
           behavior="dialog"
           class="q-mb-md"
           outlined
-          v-model="model"
+          v-model="localObcinaFilter"
           use-input
           label="Občina"
           input-debounce="0"
@@ -38,7 +38,7 @@
           behavior="dialog"
           class="q-mb-md"
           outlined
-          v-model="type"
+          v-model="localTypeFilter"
           :options="intervencijaType"
           label="Tip intervencije"
           multiple
@@ -85,6 +85,8 @@ export default {
       localOrderFilter: "",
       type: null,
       intervencijaType: options,
+      localObcinaFilter: null,
+      localTypeFilter: null,
     };
   },
   setup() {
@@ -131,13 +133,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("filters", ["orderFilter"]),
+    ...mapGetters("filters", ["orderFilter", "obcinaFilter", "typeFilter"]),
   },
   created() {
     this.localOrderFilter = this.orderFilter;
+    this.localObcinaFilter = this.obcinaFilter;
+    this.localTypeFilter = this.typeFilter;
   },
   methods: {
-    ...mapMutations("filters", ["setOrderFilter"]),
+    ...mapMutations("filters", [
+      "setOrderFilter",
+      "setObcinaFilter",
+      "setTypeFilter",
+    ]),
     show() {
       this.$refs.dialog.show();
     },
@@ -151,6 +159,8 @@ export default {
     },
     onOKClick() {
       this.setOrderFilter(this.localOrderFilter);
+      this.setObcinaFilter(this.localObcinaFilter);
+      this.setTypeFilter(this.localTypeFilter);
       // on OK, it is REQUIRED to
       // emit "ok" event (with optional payload)
       // before hiding the QDialog

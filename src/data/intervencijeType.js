@@ -11,17 +11,17 @@ const options = [
   },
   {
     label: "Nesreče v prometu",
-    value: "Nesreče v prometu",
+    value: "Prometna nesreča",
     icon: "fas fa-car",
   },
   {
     label: "Požari in eksplozije",
-    value: "Požari in eksplozije",
+    value: "Požar, eksplozija",
     icon: "fas fa-fire",
   },
   {
     label: "Onesnaževanja, nesreče z nevarnimi snovmi",
-    value: "Onesnaževanja, nesreče z nevarnimi snovmi",
+    value: "Onesnaženje, nesreče z nevarnimi snovmi",
     icon: "fas fa-square",
   },
   {

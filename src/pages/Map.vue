@@ -9,7 +9,7 @@
     >
       <l-tile-layer :url="url" />
       <custom-marker
-        v-for="(intervencija, key) in intervencijeFiltered"
+        v-for="(intervencija, key) in intervencijeAll"
         :key="key"
         :marker="{ lat: intervencija.wgsLat, lng: intervencija.wgsLon }"
         :offsetX="-35"
@@ -80,7 +80,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("intervencije", ["intervencijeFiltered", "isFetched"]),
+    ...mapGetters("intervencije", ["intervencijeAll", "isFetched"]),
   },
   methods: {
     showDetails(intervencija) {

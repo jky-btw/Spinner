@@ -139,7 +139,25 @@ function searchList(itv, rootGetters) {
 }
 
 function filterList(itv, rootGetters) {
-  return true;
+  const obcinaFilter = rootGetters["filters/obcinaFilter"];
+  const typeFilter = rootGetters["filters/typeFilter"];
+
+  var match = true;
+
+  if (obcinaFilter && obcinaFilter.length)
+    match =
+      obcinaFilter.findIndex(
+        (item) => itv.obcinaNaziv.toLowerCase() === item.toLowerCase()
+      ) != -1;
+
+  if (typeFilter && typeFilter.length && match)
+    match =
+      typeFilter.findIndex(
+        (item) =>
+          itv.intervencijaVrstaNaziv.toLowerCase() === item.value.toLowerCase()
+      ) != -1;
+
+  return match;
 }
 
 function sortList(itv1, itv2, rootGetters) {

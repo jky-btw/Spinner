@@ -36,7 +36,7 @@ const mutations = {
   setOrderFilter(state, payload) {
     state.orderFilter = payload;
   },
-  seObcinaFilter(state, payload) {
+  setObcinaFilter(state, payload) {
     state.obcinaFilter = payload;
   },
   setTypeFilter(state, payload) {
