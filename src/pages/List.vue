@@ -11,7 +11,7 @@
 import LoadingIcon from "components/LoadingIcon";
 import IntList from "components/list/IntList";
 
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SpinnerListPage",

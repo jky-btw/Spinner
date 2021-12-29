@@ -5,7 +5,11 @@ const routes = [
     children: [
       { path: "", redirect: "/list" },
       { path: "list", component: () => import("pages/List.vue") },
-      { path: "map", component: () => import("pages/Map.vue") },
+      {
+        path: "map",
+        name: "map",
+        component: () => import("pages/Map.vue"),
+      },
       { path: "other", component: () => import("pages/Other.vue") },
     ],
   },

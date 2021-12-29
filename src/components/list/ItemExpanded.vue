@@ -11,7 +11,7 @@
     </div>
 
     <q-card-actions class="row justify-between">
-      <q-btn flat round icon="map" />
+      <q-btn flat round icon="map" @click="goToMap(intervencija)" />
       <q-btn
         flat
         round
@@ -52,6 +52,14 @@ export default {
     }
 
     return { openDetailsDialog };
+  },
+  methods: {
+    goToMap(intervencija) {
+      this.$router.push({
+        name: "map",
+        params: { intervencija: JSON.stringify(intervencija) },
+      });
+    },
   },
 };
 </script>
