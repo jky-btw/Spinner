@@ -6,6 +6,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routes from "./routes";
+import { store } from "../store"; // ...or wherever your `vuex` store is defined
 
 /*
  * If not building with SSR mode, you can
@@ -35,5 +36,13 @@ export default route(function (/* { store, ssrContext } */) {
     ),
   });
 
+  /*
+  const waitForStorageToBeReady = async (to, from, next) => {
+    await store.restored;
+    next();
+  };
+
+  Router.beforeEach(waitForStorageToBeReady);
+*/
   return Router;
 });

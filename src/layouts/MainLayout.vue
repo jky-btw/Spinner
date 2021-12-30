@@ -20,7 +20,7 @@
         <q-route-tab
           name="other"
           to="other"
-          label="Drugo"
+          label="Shranjeno"
           icon="help_outline"
         />
       </q-tabs>

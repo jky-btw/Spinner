@@ -3,6 +3,10 @@ import { createStore } from "vuex";
 
 import intervencije from "./modules/intervencije";
 import filters from "./modules/filters";
+import saved from "./modules/saved";
+
+import VuexPersistence from "vuex-persist";
+import localforage from "localforage";
 
 /*
  * If not building with SSR mode, you can
@@ -18,8 +22,24 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       intervencije,
       filters,
+      saved,
     },
+    plugins: [
+      new VuexPersistence({
+        //asyncStorage: true,
+        storage: localStorage,
 
+        reducer: (state) => ({ saved: state.saved }),
+        /*
+        async restoreState(key) {
+          const state = await localforage.getItem(key);
+          console.log(state);
+          const deserialized = JSON.parse(state.saved);
+          return deserialized;
+        },
+        */
+      }).plugin,
+    ],
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
     strict: process.env.DEBUGGING,
