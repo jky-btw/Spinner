@@ -1,14 +1,26 @@
 <template>
   <div class="marker-wrapper">
-    <slot />
+    <svg class="marker-icon">
+      <use href="icons/svg/marker.svg#Layer_1"></use>
+    </svg>
+    <SpinnerIntIcon :intervencija="intervencija" />
   </div>
 </template>
 <script>
 import L from "leaflet";
 import { Icon } from "leaflet/src/layer/marker/Icon";
 
+import SpinnerIntIcon from "src/components/IntIcon";
+
 export default {
+  components: {
+    SpinnerIntIcon,
+  },
   props: {
+    intervencija: {
+      type: Object,
+      required: true,
+    },
     marker: {
       type: Object,
       default: undefined,
@@ -119,5 +131,19 @@ export var CustomMarker = Icon.extend({
 <style scoped>
 .marker-wrapper {
   position: absolute;
+}
+.int-icon {
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  height: 40px;
+  width: 40px;
+}
+.marker-icon {
+  position: absolute;
+}
+.marker-icon {
+  height: 90px;
+  width: 70px;
 }
 </style>

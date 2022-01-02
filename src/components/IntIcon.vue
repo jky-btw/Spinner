@@ -1,6 +1,11 @@
 <template>
   <svg class="int-icon">
-    <use :href="iconPath" :class="this.intervencija.barvaIme"></use>
+    <use
+      v-if="this.intervencija.type == 'normal'"
+      :href="iconPath"
+      :class="this.intervencija.barvaIme"
+    ></use>
+    <use v-else :href="iconPath" class="icon-blue"></use>
   </svg>
 </template>
 
@@ -13,7 +18,7 @@ export default {
   computed: {
     iconPath() {
       if (this.intervencija.type == "vecjiObseg")
-        return "icons/svg/vecjiObseg.svg";
+        return "icons/svg/vecjiObseg.svg#Layer_1";
 
       return "icons/svg/" + this.intervencija.ikonaIme + ".svg#Layer_1";
     },

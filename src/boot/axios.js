@@ -8,7 +8,7 @@ import axios from "axios";
 // "export default () => {}" function below (which runs individually
 // for each client)
 const apiSpin = axios.create({
-  baseURL: process.env.DEV ? "spin" : "https://spin3.sos112.si",
+  baseURL: process.env.DEV ? "spin" : "https://spinnerapi.herokuapp.com",
   //baseURL: "https://spin3.sos112.si",
 });
 

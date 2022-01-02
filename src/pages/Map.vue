@@ -8,19 +8,21 @@
       ref="map"
     >
       <l-tile-layer :url="url" />
-      <custom-marker
-        v-for="(intervencija, key) in intervencijeAll"
-        :key="key"
-        :marker="{ lat: intervencija.wgsLat, lng: intervencija.wgsLon }"
-        :offsetX="-35"
-        :offsetY="-90"
-        @click="showDetails(intervencija)"
-      >
-        <svg class="marker-icon">
-          <use href="icons/svg/marker.svg#Layer_1"></use>
-        </svg>
-        <SpinnerIntIcon :intervencija="intervencija" />
-      </custom-marker>
+      <template v-for="(intervencija, key) in intervencijeAll" :key="key">
+        <custom-marker
+          v-if="intervencija.type == 'normal'"
+          :intervencija="intervencija"
+          :marker="{ lat: intervencija.wgsLat, lng: intervencija.wgsLon }"
+          :offsetX="-35"
+          :offsetY="-90"
+          @click="showDetails(intervencija)"
+        />
+        <VecjiObsegMarker
+          v-else
+          :intervencija="intervencija"
+          @click="showDetails(intervencija)"
+        />
+      </template>
     </l-map>
   </q-page>
 </template>
@@ -29,12 +31,11 @@
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 import CustomMarker from "src/components/CustomMarker";
-import SpinnerIntIcon from "src/components/IntIcon";
-import { mapGetters } from "vuex";
-import { useQuasar } from "quasar";
+import VecjiObsegMarker from "src/components/VecjiObsegMarker";
 import SmallPreview from "components/SmallPreview";
 
-import { ref } from "vue";
+import { mapGetters } from "vuex";
+import { useQuasar } from "quasar";
 
 export default {
   name: "SpinnerMapPage",
@@ -42,7 +43,7 @@ export default {
     LMap,
     LTileLayer,
     CustomMarker,
-    SpinnerIntIcon,
+    VecjiObsegMarker,
   },
   props: {
     intervencija: { required: false, type: Object, default: null },
@@ -102,20 +103,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.int-icon {
-  position: absolute;
-  top: 16px;
-  left: 14px;
-  height: 40px;
-  width: 40px;
-}
-.marker-icon {
-  position: absolute;
-}
-.marker-icon {
-  height: 90px;
-  width: 70px;
-}
-</style>
