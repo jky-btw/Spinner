@@ -34,7 +34,7 @@ import CustomMarker from "src/components/CustomMarker";
 import VecjiObsegMarker from "src/components/VecjiObsegMarker";
 import SmallPreview from "components/SmallPreview";
 
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { useQuasar } from "quasar";
 
 export default {
@@ -83,7 +83,12 @@ export default {
   computed: {
     ...mapGetters("intervencije", ["intervencijeAll", "isFetched"]),
   },
+  mounted() {
+    if(!this.isFetched)
+      this.fetchData();
+  },
   methods: {
+    ...mapActions("intervencije", ["fetchData"]),
     showDetails(intervencija) {
       if (this.dialogOpened) this.dialog.hide();
 

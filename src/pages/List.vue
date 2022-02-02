@@ -30,7 +30,8 @@ export default {
     ...mapGetters("intervencije", ["intervencijeFiltered", "isFetched"]),
   },
   mounted() {
-    this.fetchData();
+    if(!this.isFetched)
+      this.fetchData();
   },
 };
 </script>

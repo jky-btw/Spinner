@@ -12,12 +12,14 @@
   "dependencies": {
     "@quasar/extras": "^1.12.2",
     "@vue-leaflet/vue-leaflet": "^0.6.1",
-    "axios": "^0.21.1",
+    "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "leaflet": "^1.7.1",
     "localforage": "^1.10.0",
     "moment": "^2.29.1",
     "quasar": "^2.4.2",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0",
     "vuex": "^4.0.1",
     "vuex-persist": "^3.1.3"
   },
