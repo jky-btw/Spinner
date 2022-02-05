@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered separator>
+  <q-list separator>
     <q-expansion-item
       v-for="(intervencija, key) in modelValue"
       :key="key.toString()"

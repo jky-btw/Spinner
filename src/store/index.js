@@ -4,6 +4,7 @@ import { createStore } from "vuex";
 import intervencije from "./modules/intervencije";
 import filters from "./modules/filters";
 import saved from "./modules/saved";
+import settings from "./modules/settings";
 
 import VuexPersistence from "vuex-persist";
 import localforage from "localforage";
@@ -23,13 +24,14 @@ export default store(function (/* { ssrContext } */) {
       intervencije,
       filters,
       saved,
+      settings,
     },
     plugins: [
       new VuexPersistence({
         //asyncStorage: true,
         storage: localStorage,
 
-        reducer: (state) => ({ saved: state.saved }),
+        reducer: (state) => ({ saved: state.saved, settings: state.settings }),
         /*
         async restoreState(key) {
           const state = await localforage.getItem(key);

@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <HeaderToolbar v-model:selectedTab="selectedTab" />
 
-    <q-footer bordered class="bg-white text-primary">
+    <q-footer bordered>
       <q-tabs
         active-color="primary"
         indicator-color="transparent"
@@ -17,12 +17,7 @@
           icon="format_list_bulleted"
         />
         <q-route-tab name="map" to="map" label="Zemljevid" icon="map" />
-        <q-route-tab
-          name="other"
-          to="other"
-          label="Shranjeno"
-          icon="help_outline"
-        />
+        <q-route-tab name="saved" to="saved" label="Shranjeno" icon="star" />
       </q-tabs>
     </q-footer>
 
@@ -54,5 +49,19 @@ export default {
 <style lang="scss">
 .q-toolbar__title {
   font-size: 1rem;
+}
+
+.body--dark {
+  .q-footer {
+    background-color: $darkmode-background;
+    color: $darkmode-text;
+  }
+}
+
+.body--light {
+  .q-footer {
+    background-color: white;
+    color: black;
+  }
 }
 </style>

@@ -13,13 +13,16 @@
         <q-btn flat round dense icon="location_on" />
         <q-btn flat round dense icon="refresh" @click="fetchData" />
       </template>
+      <template v-if="selectedTab == 'saved'">
+        <q-btn flat round dense icon="dark_mode" @click="toggleDarkMode" />
+      </template>
     </q-toolbar>
   </q-header>
 </template>
 
 <script>
 import { useQuasar } from "quasar";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import moment from "moment";
 import FilterDialog from "components/list/FilterDialog";
 import SearchDialog from "components/list/SearchDialog";
@@ -82,9 +85,11 @@ export default {
   },
   computed: {
     ...mapGetters("intervencije", ["fetchedDate"]),
+    ...mapGetters("settings", ["getDarkMode"]),
   },
   methods: {
     ...mapActions("intervencije", ["fetchData"]),
+    ...mapActions("settings", ["toggleDarkMode"]),
   },
 };
 </script>

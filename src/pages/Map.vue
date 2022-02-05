@@ -49,7 +49,9 @@ export default {
     intervencija: { required: false, type: Object, default: null },
   },
   setup() {
+    let dialog = null;
     const $q = useQuasar();
+
     function createPopUp(intervencija) {
       return $q
         .dialog({
@@ -65,10 +67,11 @@ export default {
           // console.log('Cancel')
         })
         .onDismiss(() => {
-          // console.log('onDismiss')
+          // console.log("onDismiss");
+          this.dialog = null;
         });
     }
-    return { createPopUp };
+    return { createPopUp, dialog };
   },
   data() {
     return {
@@ -76,24 +79,27 @@ export default {
       zoom: 12,
       center: [46.056946, 14.505751],
       iconSize: 32,
-      dialogOpened: false,
-      dialog: null,
     };
   },
   computed: {
     ...mapGetters("intervencije", ["intervencijeAll", "isFetched"]),
   },
   mounted() {
-    if(!this.isFetched)
-      this.fetchData();
+    if (!this.isFetched) this.fetchData();
   },
   methods: {
     ...mapActions("intervencije", ["fetchData"]),
-    showDetails(intervencija) {
-      if (this.dialogOpened) this.dialog.hide();
-
-      this.dialog = this.createPopUp(intervencija);
-      this.dialogOpened = true;
+    async showDetails(intervencija) {
+      if (this.dialog) {
+        this.dialog.hide();
+        //Wait for dialog to hide, idk
+        while (this.dialog) {
+          await new Promise((r) => setTimeout(r, 200));
+        }
+        this.dialog = this.createPopUp(intervencija);
+      } else {
+        this.dialog = this.createPopUp(intervencija);
+      }
     },
   },
   activated() {
@@ -104,7 +110,7 @@ export default {
     } else this.center = [46.056946, 14.505751];
   },
   deactivated() {
-    if (this.dialogOpened) this.dialog.hide();
+    if (this.dialog) this.dialog.hide();
   },
 };
 </script>

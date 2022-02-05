@@ -10,7 +10,11 @@ const routes = [
         name: "map",
         component: () => import("pages/Map.vue"),
       },
-      { path: "other", component: () => import("pages/Other.vue") },
+      {
+        path: "saved",
+        name: "saved",
+        component: () => import("pages/Other.vue"),
+      },
     ],
   },
   /*

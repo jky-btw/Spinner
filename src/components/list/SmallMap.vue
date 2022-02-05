@@ -10,16 +10,12 @@
     <l-tile-layer :url="url" />
     <l-geo-json v-if="intervencija.type == 'vecjiObseg'" :geojson="geojson" />
     <custom-marker
+      :intervencija="intervencija"
       v-else
       :marker="{ lat: intervencija.wgsLat, lng: intervencija.wgsLon }"
       :offsetX="-35"
       :offsetY="-90"
-    >
-      <svg class="marker-icon">
-        <use href="icons/svg/marker.svg#Layer_1"></use>
-      </svg>
-      <SpinnerIntIcon :intervencija="intervencija" />
-    </custom-marker>
+    />
   </l-map>
 </template>
 
@@ -28,7 +24,6 @@ import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LGeoJson } from "@vue-leaflet/vue-leaflet";
 import axios from "axios";
 import CustomMarker from "src/components/CustomMarker";
-import SpinnerIntIcon from "src/components/IntIcon";
 
 export default {
   name: "SmallIntMap",
@@ -40,7 +35,6 @@ export default {
     LTileLayer,
     LGeoJson,
     CustomMarker,
-    SpinnerIntIcon,
   },
   data() {
     return {

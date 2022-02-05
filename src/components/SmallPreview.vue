@@ -2,10 +2,11 @@
   <q-dialog
     seamless
     position="bottom"
-    ref="dialog"
+    ref="dialogRef"
+    @hide="onDialogHide"
     v-touch-swipe.mouse.down="handleSwipe"
   >
-    <q-card class="q-dialog-plugin" @click="expand()">
+    <q-card class="q-dialog-plugin" @click="expanded = !expanded">
       <div class="row justify-between items-center no-wrap fit">
         <div class="column content-center">
           <div class="intervencija-title q-pb-sm">
@@ -46,7 +47,9 @@
 </template>
 
 <script>
+import { useDialogPluginComponent } from "quasar";
 import SpinnerIntIcon from "src/components/IntIcon";
+
 export default {
   name: "SmallPreview",
   components: { SpinnerIntIcon },
@@ -54,57 +57,50 @@ export default {
     intervencija: { type: Object, required: true },
   },
   emits: [
-    // REQUIRED
-    "ok",
-    "hide",
+    // REQUIRED; need to specify some events that your
+    // component will emit through useDialogPluginComponent()
+    ...useDialogPluginComponent.emits,
   ],
+  setup() {
+    // REQUIRED; must be called inside of setup()
+    const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+      useDialogPluginComponent();
+    // dialogRef      - Vue ref to be applied to QDialog
+    // onDialogHide   - Function to be used as handler for @hide on QDialog
+    // onDialogOK     - Function to call to settle dialog with "ok" outcome
+    //                    example: onDialogOK() - no payload
+    //                    example: onDialogOK({ /*.../* }) - with payload
+    // onDialogCancel - Function to call to settle dialog with "cancel" outcome
+
+    return {
+      // This is REQUIRED;
+      // Need to inject these (from useDialogPluginComponent() call)
+      // into the vue scope for the vue html template
+      dialogRef,
+      onDialogHide,
+
+      // other methods that we used in our vue html template;
+      // these are part of our example (so not required)
+      onOKClick() {
+        // on OK, it is REQUIRED to
+        // call onDialogOK (with optional payload)
+        onDialogOK();
+        // or with payload: onDialogOK({ ... })
+        // ...and it will also hide the dialog automatically
+      },
+
+      // we can passthrough onDialogCancel directly
+      onCancelClick: onDialogCancel,
+    };
+  },
   data() {
     return {
       expanded: false,
     };
   },
   methods: {
-    expand() {
-      this.expanded = !this.expanded;
-    },
-
     handleSwipe() {
-      console.log("swipe");
-      this.hide();
-    },
-
-    // following method is REQUIRED
-    // (don't change its name --> "show")
-    show() {
-      this.$refs.dialog.show();
-    },
-
-    // following method is REQUIRED
-    // (don't change its name --> "hide")
-    hide() {
-      this.$refs.dialog.hide();
-    },
-
-    onDialogHide() {
-      // required to be emitted
-      // when QDialog emits "hide" event
-      this.$emit("hide");
-    },
-
-    onOKClick() {
-      // on OK, it is REQUIRED to
-      // emit "ok" event (with optional payload)
-      // before hiding the QDialog
-      this.$emit("ok");
-      // or with payload: this.$emit('ok', { ... })
-
-      // then hiding dialog
-      this.hide();
-    },
-
-    onCancelClick() {
-      // we just need to hide the dialog
-      this.hide();
+      this.dialogRef.hide();
     },
   },
 };

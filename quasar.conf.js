@@ -82,7 +82,7 @@ module.exports = configure(function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         "/spin": {
-          target: "https://spin3.sos112.si/",
+          target: "https://spinner-api.herokuapp.com",
           changeOrigin: true,
           pathRewrite: {
             "^/spin": "",
