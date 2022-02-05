@@ -34,11 +34,13 @@
         <SpinnerIntIcon :intervencija="intervencija" />
       </div>
       <transition
-        appear
         enter-active-class="animated backInDown"
         leave-active-class="animated backOutUp"
       >
-        <q-card-section v-if="expanded && intervencija.besedilo">
+        <q-card-section
+          v-if="expanded && intervencija.besedilo"
+          :class="desktop ? 'no-animation' : ''"
+        >
           {{ intervencija.besedilo }}
         </q-card-section>
       </transition>
@@ -47,7 +49,8 @@
 </template>
 
 <script>
-import { useDialogPluginComponent } from "quasar";
+import { ref } from "vue";
+import { useDialogPluginComponent, useQuasar } from "quasar";
 import SpinnerIntIcon from "src/components/IntIcon";
 
 export default {
@@ -62,6 +65,10 @@ export default {
     ...useDialogPluginComponent.emits,
   ],
   setup() {
+    const $q = useQuasar();
+    let desktop = $q.platform.is.desktop;
+    let expanded = ref(desktop);
+
     // REQUIRED; must be called inside of setup()
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
       useDialogPluginComponent();
@@ -91,11 +98,9 @@ export default {
 
       // we can passthrough onDialogCancel directly
       onCancelClick: onDialogCancel,
-    };
-  },
-  data() {
-    return {
-      expanded: false,
+
+      expanded,
+      desktop,
     };
   },
   methods: {
@@ -123,5 +128,9 @@ export default {
 .intervencija-date,
 .intervencija-location {
   font-size: 1rem;
+}
+
+.no-animation {
+  animation: none;
 }
 </style>

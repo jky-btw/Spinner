@@ -52,3 +52,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.q-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.q-expansion-item {
+  min-width: 450px;
+  flex: 33%;
+  border-left: 1px rgba(255, 255, 255, 0.28) solid;
+  border-right: 1px rgba(255, 255, 255, 0.28) solid;
+}
+</style>
