@@ -6,8 +6,15 @@
       style="width: 100vw; min-height: inherit"
       :zoomAnimation="true"
       ref="map"
+      :class="$q.dark.isActive ? 'darkMode-map' : ''"
     >
-      <l-tile-layer :url="url" />
+      <l-tile-layer
+        :url="
+          $q.dark.isActive
+            ? 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=f215e444-ed38-469a-a2e5-5dec032793d5'
+            : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        "
+      />
       <template v-for="(intervencija, key) in intervencijeAll" :key="key">
         <custom-marker
           v-if="intervencija.type == 'normal'"
@@ -51,7 +58,6 @@ export default {
   setup() {
     let dialog = null;
     const $q = useQuasar();
-
     function createPopUp(intervencija) {
       return $q
         .dialog({
@@ -71,7 +77,7 @@ export default {
           this.dialog = null;
         });
     }
-    return { createPopUp, dialog };
+    return { createPopUp, dialog, $q };
   },
   data() {
     return {
@@ -89,6 +95,7 @@ export default {
   },
   methods: {
     ...mapActions("intervencije", ["fetchData"]),
+    ...mapActions("settings", ["darkMode"]),
     async showDetails(intervencija) {
       if (this.dialog) {
         this.dialog.hide();
@@ -114,3 +121,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.darkMode-map {
+  background-color: rgb(46, 46, 46);
+}
+</style>

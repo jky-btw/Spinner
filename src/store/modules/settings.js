@@ -12,10 +12,8 @@ const getters = {
 
 const actions = {
   toggleDarkMode(store) {
-    console.log(store);
-    const value = !store.state.darkMode;
-    Dark.set(value);
-    store.commit("setDarkMode", value);
+    Dark.set(!store.state.darkMode);
+    store.commit("setDarkMode", !store.state.darkMode);
   },
 };
 
