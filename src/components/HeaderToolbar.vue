@@ -10,7 +10,7 @@
         <q-btn flat round dense icon="refresh" @click="fetchData" />
       </template>
       <template v-if="selectedTab == 'map'">
-        <q-btn flat round dense icon="location_on" />
+        <q-btn flat round dense icon="location_on" @click="fetchLocation" />
         <q-btn flat round dense icon="refresh" @click="fetchData" />
       </template>
       <template v-if="selectedTab == 'saved'">
@@ -90,6 +90,7 @@ export default {
   methods: {
     ...mapActions("intervencije", ["fetchData"]),
     ...mapActions("settings", ["toggleDarkMode"]),
+    ...mapActions("location", ["fetchLocation"]),
   },
 };
 </script>

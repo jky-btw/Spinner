@@ -3,6 +3,7 @@
     <l-map
       v-model:center="center"
       v-model:zoom="zoom"
+      v-model:bounds="bounds"
       style="width: 100vw; min-height: inherit"
       :zoomAnimation="true"
       ref="map"
@@ -44,6 +45,8 @@ import SmallPreview from "components/SmallPreview";
 import { mapGetters, mapActions } from "vuex";
 import { useQuasar } from "quasar";
 
+import axios from "axios";
+
 export default {
   name: "SpinnerMapPage",
   components: {
@@ -51,9 +54,6 @@ export default {
     LTileLayer,
     CustomMarker,
     VecjiObsegMarker,
-  },
-  props: {
-    intervencija: { required: false, type: Object, default: null },
   },
   setup() {
     let dialog = null;
@@ -83,20 +83,31 @@ export default {
     return {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       zoom: 12,
-      center: [46.056946, 14.505751],
       iconSize: 32,
+      center: [46.056946, 14.505751],
+      bounds: null,
     };
   },
   computed: {
     ...mapGetters("intervencije", ["intervencijeAll", "isFetched"]),
+    ...mapGetters("location", ["location"]),
+  },
+  watch: {
+    location: function (val) {
+      this.center = val;
+    },
   },
   mounted() {
+    this.fetchLocation();
     if (!this.isFetched) this.fetchData();
   },
   methods: {
     ...mapActions("intervencije", ["fetchData"]),
     ...mapActions("settings", ["darkMode"]),
+    ...mapActions("location", ["fetchLocation"]),
     async showDetails(intervencija) {
+      this.centerTo(intervencija);
+
       if (this.dialog) {
         this.dialog.hide();
         //Wait for dialog to hide, idk
@@ -108,13 +119,35 @@ export default {
         this.dialog = this.createPopUp(intervencija);
       }
     },
+    async centerTo(intervencija) {
+      if (intervencija.type == "normal") {
+        this.center = [intervencija.wgsLat, intervencija.wgsLon];
+      } else {
+        const response = await axios.get(
+          "https://raw.githubusercontent.com/jky-btw/obcineGeoJson/main/data/" +
+            intervencija.obcinaMID +
+            ".geojson"
+        );
+
+        this.bounds = [
+          [
+            response.data.features[0].bbox[1],
+            response.data.features[0].bbox[0],
+          ],
+          [
+            response.data.features[0].bbox[3],
+            response.data.features[0].bbox[2],
+          ],
+        ];
+      }
+    },
   },
   activated() {
     if (this.$route.params.intervencija) {
       const intv = JSON.parse(this.$route.params.intervencija);
-      this.center = [intv.wgsLat, intv.wgsLon];
+      this.centerTo(intv);
       this.zoom = 15;
-    } else this.center = [46.056946, 14.505751];
+    }
   },
   deactivated() {
     if (this.dialog) this.dialog.hide();

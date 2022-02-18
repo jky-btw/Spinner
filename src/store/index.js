@@ -5,6 +5,7 @@ import intervencije from "./modules/intervencije";
 import filters from "./modules/filters";
 import saved from "./modules/saved";
 import settings from "./modules/settings";
+import location from "./modules/location";
 
 import VuexPersistence from "vuex-persist";
 import localforage from "localforage";
@@ -25,6 +26,7 @@ export default store(function (/* { ssrContext } */) {
       filters,
       saved,
       settings,
+      location,
     },
     plugins: [
       new VuexPersistence({
